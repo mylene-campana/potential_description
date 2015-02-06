@@ -1,0 +1,399 @@
+<?xml version="1.0"?>
+<robot name="obstacles"> <!-- several plannar obstacles-->
+  <link name="obstacle_base"> <!-- box-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.8 1.8 0.4" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0"/>
+      <geometry>
+        <box size="0.8 1.8 0.4" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_one" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_one"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+  
+  <link name="l_object_one"> <!-- cylinder (replacing box)-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.9 0.4 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+      <material name="Orange">
+        <color rgba="1 0.4 0.3 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.9 0.4 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_one_bis" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_one_bis"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+  
+  <link name="l_object_one_bis"> <!-- cylinder (replacing box)-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="1.5 0.4 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+      <material name="Orange">
+        <color rgba="1 0.4 0.3 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="1.5 0.4 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_two" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_two"/>
+    <origin xyz="0 0 0"/>
+  </joint>  
+  
+  <link name="l_object_two"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="1.2 -3.5 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="1.2"/>
+      </geometry>
+      <material name="Green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="1.2 -3.5 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="1.2"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_three" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_three"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_three"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-2.8 -2.2 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="1.2"/>
+      </geometry>
+      <material name="Blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-2.8 -2.2 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="1.2"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="j_object_four" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_four"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_four"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-2.5 1.2 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+      <material name="Gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-2.5 1.2 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+    </collision>
+  </link>  
+  
+  <joint name="j_object_five" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_five"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_five"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-1 4 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+      <material name="Gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-1 4 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_six" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_six"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_six"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="2.6 2.5 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="1.2"/>
+      </geometry>
+      <material name="Green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="2.6 2.5 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="1.2"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_seven" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_seven"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_seven"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="3.8 -1 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+      <material name="Blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="3.8 -1 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.6"/>
+      </geometry>
+    </collision>
+  </link>  
+  
+  <joint name="j_object_eight" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_eight"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_eight"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="1.5 -1.8 0"/>
+      <geometry>
+        <cylinder length="0.39" radius="0.6"/>
+      </geometry>
+      <material name="Yellow">
+        <color rgba="1 0.5 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="1.5 -1.8 0"/>
+      <geometry>
+        <cylinder length="0.39" radius="0.6"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_nine" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_nine"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_nine"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="2. 1.2 0"/>
+      <geometry>
+        <cylinder length="0.39" radius="0.4"/>
+      </geometry>
+      <material name="Light_Blue">
+        <color rgba="0 0.5 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="2. 1.2 0"/>
+      <geometry>
+        <cylinder length="0.39" radius="0.4"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_ten" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_ten"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_ten"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-1.6 1.4 0"/>
+      <geometry>
+        <cylinder length="0.39" radius="0.5"/>
+      </geometry>
+      <material name="Yellow">
+        <color rgba="1 0.5 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-1.6 1.4 0"/>
+      <geometry>
+        <cylinder length="0.39" radius="0.5"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_eleven" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_eleven"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_eleven"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-1.5 2.3 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.5"/>
+      </geometry>
+      <material name="Yellow">
+        <color rgba="1 0.5 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-1.5 2.3 0"/>
+      <geometry>
+        <cylinder length="0.4" radius="0.5"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="j_object_twelve" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_twelve"/>
+    <origin xyz="0 0 0"/>
+  </joint>    
+  
+  <link name="l_object_twelve"> <!-- cylinder-->
+    <inertial>
+      <origin xyz="0 0 0" /> 
+      <mass value="1.0" />
+      <inertia  ixx="1.0" ixy="0.0"  ixz="0.0"  iyy="100.0"  iyz="0.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.9 3. 0"/>
+      <geometry>
+        <cylinder length="0.39" radius="0.5"/>
+      </geometry>
+      <material name="Yellow">
+        <color rgba="1 0.5 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.9 3. 0"/>
+      <geometry>
+        <cylinder length="0.39" radius="0.5"/>
+      </geometry>
+    </collision>
+  </link> 
+</robot>
