@@ -9,13 +9,13 @@
     <visual>
       <origin xyz="0 0 0"/>
       <geometry>
-        <box size="0.8 1.8 0.4" />
+        <box size="0.8 1.8 0.42" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0"/>
       <geometry>
-        <box size="0.8 1.8 0.4" />
+        <box size="0.8 1.8 0.42" />
       </geometry>
     </collision>
   </link>

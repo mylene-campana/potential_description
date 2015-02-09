@@ -1,12 +1,10 @@
 #/usr/bin/env python
 # Script which goes with potential_description package.
 # Load simple 'robot' cylinder and obstacle to test methods.
-# "roslaunch potential_description potential_cylinder_point.launch"
-# "potential_obstacles_concaves.launch"
-
 
 from hpp.gepetto import Viewer, PathPlayer
 from hpp.corbaserver.simple_robot import Robot
+from hpp.corbaserver import ProblemSolver
 from hpp.corbaserver import Client
 import time
 import sys
@@ -18,6 +16,7 @@ robot = Robot ('simple_robot')
 robot.setJointBounds('base_joint_xy', [-kRange, kRange, -kRange, kRange])
 ps = ProblemSolver (robot)
 cl = robot.client
+Viewer.withFloor = True
 r = Viewer (ps)
 pp = PathPlayer (cl, r)
 
@@ -31,14 +30,16 @@ ps.addGoalConfig (q2)
 # Load box obstacle in HPP for collision avoidance #
 #cl.obstacle.loadObstacleModel('potential_description','cylinder_obstacle','')
 cl.obstacle.loadObstacleModel('potential_description','obstacles_concaves','')
+r.loadObstacleModel ("potential_description","obstacles_concaves","obstacles_concaves") # in viewer !
 
 ps.createOrientationConstraint ("orConstraint", "base_joint_rz", "", [0.7071067812
 ,0,0,0.7071067812], [0,0,1]) # OK
 T = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,1]]
 ps.setNumericalConstraints ("constraints", ["orConstraint"])
 
-begin=time.time()
 ps.solve ()
+begin=time.time()
+cl.problem.optimizePath(0)
 end=time.time()
 print "Solving time: "+str(end-begin)
 
@@ -49,29 +50,29 @@ cl.problem.pathLength(1)
 ## Debug Optimization Tools ##############
 
 import matplotlib.pyplot as plt
-num_log = 22111
+num_log = 32234
 from parseLog import parseNodes, parsePathVector
 from mutable_trajectory_plot import planarPlot, addNodePlot, addPathPlot
 
-collConstrNodes = parseNodes (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:335: qCollConstr = ')
-collNodes = parseNodes (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:329: qColl = ')
+collConstrNodes = parseNodes (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:334: qCollConstr = ')
+collNodes = parseNodes (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:328: qColl = ')
 
-x0Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:288: x0=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:290: finish path parsing',2,2)
-x1Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:293: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:295: finish path parsing',2,2)
-x2Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:293: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:295: finish path parsing',3,2)
-x3Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:293: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:295: finish path parsing',4,2)
-x4Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:293: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:295: finish path parsing',5,2)
-x5Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:293: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:295: finish path parsing',6,2)
+x0Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:287: x0=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:289: finish path parsing',2,2)
+x1Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:292: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:294: finish path parsing',2,2)
+x2Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:292: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:294: finish path parsing',3,2)
+x3Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:292: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:294: finish path parsing',4,2)
+x4Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:292: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:294: finish path parsing',5,2)
+x5Path = parsePathVector (num_log, 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:292: x0+alpha*p -> x1=','INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:294: finish path parsing',6,2)
 
 plt = planarPlot (cl, 1, plt) # initialize 2D plot with obstacles and path
 plt = addNodePlot (collConstrNodes, 'bo', 'qConstr', plt)
-plt = addNodePlot (collNodes, 'ro', 'qCol', plt)
-plt = addPathPlot (cl, x0Path, 'm', plt)
-plt = addPathPlot (cl, x1Path, 'g', plt)
-plt = addPathPlot (cl, x2Path, 'b', plt)
-plt = addPathPlot (cl, x3Path, 'y', plt)
-plt = addPathPlot (cl, x4Path, 'c', plt)
-plt = addPathPlot (cl, x5Path, '0.75', plt)
+plt = addNodePlot (collNodes, 'ro', 1, 'qCol', plt)
+plt = addPathPlot (cl, x0Path, 'm', 1, plt)
+plt = addPathPlot (cl, x1Path, 'g', 1, plt)
+plt = addPathPlot (cl, x2Path, 'b', 1, plt)
+plt = addPathPlot (cl, x3Path, 'y', 1, plt)
+plt = addPathPlot (cl, x4Path, 'c', 1, plt)
+plt = addPathPlot (cl, x5Path, '0.75', 1, plt)
 plt.show() # will reset plt
 
 #####################################################################
