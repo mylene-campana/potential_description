@@ -90,7 +90,7 @@ def parseNodes (pid, prefix):
 
 # Parse a pathVector returned in a hpp log file, until the endLine is reached.
 # iterNB allows to select the optim iteration which we want to plot.
-def parsePathVector (pid, beginLine, endLine, iterNB):
+def parsePathVector (pid, beginLine, endLine, iterNB, skipLines):
     prefixConfig = 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:239: '
     l = len(prefixConfig)
     lineNB = 0
@@ -116,8 +116,8 @@ def parsePathVector (pid, beginLine, endLine, iterNB):
                         confVect[1] = float(suffix1)
                         configs.append(confVect[:])
                         print confVect
-                        # skip 2 useless lines (y parsed and 2 quaternions)
-                        lineNB = lineNB + 4 
+                        # skip 2 useless lines + skipLines others (ex: 2 for plannar quatern)
+                        lineNB = lineNB + skipLines + 2 
                         if (lines [lineNB].strip ('\n') == endLine):
                             #print "END OF PARSING"
                             return np.array (configs) # make array and finish

@@ -396,4 +396,23 @@
       </geometry>
     </collision>
   </link> 
+
+  <joint name="j_object_floor" type="fixed">
+    <parent link="obstacle_base"/>
+    <child link="l_object_floor"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="l_object_floor"> <!-- dark floor -->
+    <visual>
+      <origin xyz="0 0 -0.01"/>
+      <geometry>
+        <box size="10 10 0.01"/>
+      </geometry>
+      <material name="Dark">
+        <color rgba="0.2 0.1 0.1 1"/>
+      </material>
+    </visual>
+  </link>
+
 </robot>
