@@ -15,37 +15,11 @@ dt = 0.02 # global drawing step size
 
 # --------------------------------------------------------------------#
 
-# Plot 2D trajectory and concaves obstacles for potential scenario. nPath is the path number.
-# And special nodes in another color.
+# Plot 2D paths and some obstacles for potential scenario.
+# nPath0 and nPath1 are path numbers (for example non-optimized and optimized).
+# Obstacles can be chosen between 'somme concave obstacles' and 'a single cylinder'
 def planarPlot (cl, nPath0, nPath1, plt):
-    plt.gcf().gca().add_artist(plt.Circle((0.9,0.4),.6+dr,color='green')) # orange
-    #plt.text(0.9, 0.4, r'obst1', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((1.5,0.4),.6+dr,color='green')) # orange
-    #plt.text(1.5, 0.3, r'obst1bis', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((1.2,-3.5),1.2+dr,color='green'))
-    #plt.text(1.2, -3.5, r'obst2', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((2.6,2.5),1.2+dr,color='green'))
-    #plt.text(2.6, 2.5, r'obst6', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((-2.5,1.2),.6+dr,color='green'))
-    #plt.text(-2.5, 1.2, r'obst4', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((-1,4),.6+dr,color='green'))
-    #plt.text(-1, 4, r'obst5', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((-2.8,-2.2),1.2+dr,color='green'))
-    #plt.text(-2.8, -2.2, r'obst3', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((3.8,-1),.6+dr,color='green'))
-    #plt.text(3.8, -1, r'obst7', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Rectangle((-0.4,-0.9),0.8+dr,1.8,color='green'))
-    #plt.text(0, 0, r'obst_base', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((1.5,-1.8),0.6+dr,color='green'))
-    #plt.text(1.5, -1.8, r'obst8', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((2., 1.2),0.4+dr,color='green')) # light_blue
-    #plt.text(2., 1.2, r'obst9', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((-1.6,1.4),0.5+dr,color='green')) # yellow
-    #plt.text(-1.6, 1.4, r'obst10', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((-1.5,2.3),0.5+dr,color='green')) # yellow
-    #plt.text(-1.5, 2.3, r'obst11', fontsize=11)
-    plt.gcf().gca().add_artist(plt.Circle((-0.9,3.),0.5+dr,color='green')) # yellow
-    #plt.text(-0.9, 3., r'obst12', fontsize=11)
+    plt = obstacles (plt, True)
     init = cl.problem.getInitialConfig ()
     goal = cl.problem.getGoalConfigs ()[0] # first goal
 
@@ -69,43 +43,6 @@ def planarPlot (cl, nPath0, nPath1, plt):
     plt.plot(goal[0], goal[1], 'go')
     #plt.text(init[0]+.1, init[1]+.1, r'q_init', fontsize=11)
     #plt.text(goal[0]+.1, goal[1]+.1, r'q_end', fontsize=11)
-    return plt
-
-# --------------------------------------------------------------------#
-
-def planarPlotCylinder (cl, nPath, plt):
-    Tvec = np.arange(0., cl.problem.pathLength(nPath), dt)
-    
-    plt.gcf().gca().add_artist(plt.Circle((0,0),.5,color='r')) # Plot red cylinder
-    
-    """i = 0
-    for n in cl.problem.nodes() :
-        if i>1: # avoid 2 first nodes (init and goal)
-            plt.plot(n[0], n[1], 'ro')
-            plt.text(n[0]+.02, n[1], r'qNew%i' %(i), fontsize=8)
-        i=i+1
-    """
-    for t in Tvec:
-        plt.plot([cl.problem.configAtParam(nPath, t)[0], \
-                     cl.problem.configAtParam(nPath, t+dt)[0]], \
-                     [cl.problem.configAtParam(nPath, t)[1], \
-                     cl.problem.configAtParam(nPath, t+dt)[1]], 'k', linewidth=1.5, label="optim." if t == 0. else "")
-    
-    if (nPath == 1): # plot also initial path to compare
-        for t in np.arange(0., cl.problem.pathLength(0), dt):
-            plt.plot([cl.problem.configAtParam(0, t)[0], \
-                     cl.problem.configAtParam(0, t+dt)[0]], \
-                     [cl.problem.configAtParam(0, t)[1], \
-                     cl.problem.configAtParam(0, t+dt)[1]], 'r', label="init." if t == 0. else "")
-    
-    #plt.legend()
-    plt.axis([-5, 5, -5, 5])
-    plt.xlabel('x'); plt.ylabel('y')
-    plt.title('trajectory'); plt.grid()
-    plt.plot(cl.problem.nodes()[0][0], cl.problem.nodes()[0][1], 'go')
-    plt.plot(cl.problem.nodes()[1][0], cl.problem.nodes()[1][1], 'go')
-    plt.text(cl.problem.nodes()[0][0]+.1, cl.problem.nodes()[0][1]+.1, r'q_init', fontsize=10)
-    plt.text(cl.problem.nodes()[1][0]+.1, cl.problem.nodes()[1][1]+.1, r'q_end', fontsize=10)
     return plt
 
 # --------------------------------------------------------------------#
@@ -137,5 +74,43 @@ def addPathPlot (cl, path, pathColor, lw, plt):
     # Add first and last segment
     plt.plot([init[0], path[0][0]], [init[1], path[0][1]], pathColor, linewidth=lw)
     plt.plot([goal[0], path[size-1][0]], [goal[1], path[size-1][1]], pathColor, linewidth=lw)
+    return plt
+
+# --------------------------------------------------------------------#
+
+# Plot desired obstacles: if bool 'concave' is True plot concave obstacles, else plot cylinder
+def obstacles (plt, concave):
+    dr=0
+    if concave:
+        plt.gcf().gca().add_artist(plt.Circle((0.9,0.4),.6+dr,color='green')) # orange
+        #plt.text(0.9, 0.4, r'obst1', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((1.5,0.4),.6+dr,color='green')) # orange
+        #plt.text(1.5, 0.3, r'obst1bis', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((1.2,-3.5),1.2+dr,color='green'))
+        #plt.text(1.2, -3.5, r'obst2', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((2.6,2.5),1.2+dr,color='green'))
+        #plt.text(2.6, 2.5, r'obst6', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((-2.5,1.2),.6+dr,color='green'))
+        #plt.text(-2.5, 1.2, r'obst4', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((-1,4),.6+dr,color='green'))
+        #plt.text(-1, 4, r'obst5', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((-2.8,-2.2),1.2+dr,color='green'))
+        #plt.text(-2.8, -2.2, r'obst3', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((3.8,-1),.6+dr,color='green'))
+        #plt.text(3.8, -1, r'obst7', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Rectangle((-0.4,-0.9),0.8+dr,1.8,color='green'))
+        #plt.text(0, 0, r'obst_base', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((1.5,-1.8),0.6+dr,color='green'))
+        #plt.text(1.5, -1.8, r'obst8', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((2., 1.2),0.4+dr,color='green')) # light_blue
+        #plt.text(2., 1.2, r'obst9', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((-1.6,1.4),0.5+dr,color='green')) # yellow
+        #plt.text(-1.6, 1.4, r'obst10', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((-1.5,2.3),0.5+dr,color='green')) # yellow
+        #plt.text(-1.5, 2.3, r'obst11', fontsize=11)
+        plt.gcf().gca().add_artist(plt.Circle((-0.9,3.),0.5+dr,color='green')) # yellow
+        #plt.text(-0.9, 3., r'obst12', fontsize=11)
+    else:
+        plt.gcf().gca().add_artist(plt.Circle((0,0),.5,color='r')) # Plot red cylinder
     return plt
 

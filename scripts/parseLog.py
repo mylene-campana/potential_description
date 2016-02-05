@@ -91,7 +91,7 @@ def parseNodes (pid, prefix):
 # Parse a pathVector returned in a hpp log file, until the endLine is reached.
 # iterNB allows to select the optim iteration which we want to plot.
 def parsePathVector (pid, beginLine, endLine, iterNB, skipLines):
-    prefixConfig = 'INFO:/local/mcampana/devel/hpp/src/hpp-core/src/path-optimization/gradient-based.cc:239: '
+    prefixConfig = 'INFO:/local/mcampana/devel/hpp/src/hpp-core/include/hpp/core/path-optimization/gradient-based.hh:82: '
     l = len(prefixConfig)
     lineNB = 0
     itNB = 1 # current iteration number (of optim algo)

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="object">
 
- <disable_collisions link1="base_link"
-		      link2="l_square" />
+ <!--<disable_collisions link1="base_link"
+		      link2="l_square" />-->
 		      
 </robot>
